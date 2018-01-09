@@ -1,5 +1,10 @@
+var endurl = "https://safe-shore-55413.herokuapp.com";
+
+//var endurl = "http://127.0.0.1:3000";
+
+
 $(function () {
-        $.getJSON("http://127.0.0.1:3000/user-home//get-widgets",function (widgetsData) {
+        $.getJSON( endurl+"/user-home//get-widgets",function (widgetsData) {
            widgetsData.forEach( (widget,i) => {
                console.log("class name is" ,widget.className);
                 var htmlString = "<div class=\"col-lg-3 col-md-6 mb-4\"> "+
@@ -20,7 +25,7 @@ $(function () {
 
         });
 
-        $.getJSON("http://127.0.0.1:3000/user-home//get-weather",function (data) {
+        $.getJSON(endurl + "/user-home/get-weather",function (data) {
                 console.log("weather");
                 try{
                     let currentWeather = "<div class= \"col-md-4 mb-4\"> <div class=\"card h-100\"> <div class=\"card-body\">  <h2 class=\"card-title\">Current</h2> " +
@@ -47,7 +52,7 @@ $(function () {
         })
 
     $("#myaccount").click(function () {
-        $.get( "http://127.0.0.1:3000/user-myaccount",function( data ) {
+        $.get( endurl +"/user-myaccount",function( data ) {
             $("body").html(data);
         });
     })
@@ -63,7 +68,7 @@ function OnBuy(elem) {
     var obj = {
         id : elem.id
     }
-    $.post( "http://127.0.0.1:3000/user-home/buy-widget", obj,function( data ) {
+    $.post( endurl + "/user-home/buy-widget", obj,function( data ) {
         $("body").html(data);
     });
 }

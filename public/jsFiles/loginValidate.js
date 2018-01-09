@@ -1,3 +1,7 @@
+var endurl = "https://safe-shore-55413.herokuapp.com";
+
+//var endurl = "http://127.0.0.1:3000";
+
 $(function () {
     $("#loginform").validate({
         rules: {

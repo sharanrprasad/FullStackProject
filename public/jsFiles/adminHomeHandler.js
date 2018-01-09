@@ -1,3 +1,8 @@
+var endurl = "https://safe-shore-55413.herokuapp.com";
+
+//var endurl = "http://127.0.0.1:3000";
+
+
 $(function () {
 
     $("#search-user").validate({
@@ -24,7 +29,7 @@ $(function () {
         let data = $('#search-user').serialize();
         console.log("data sending to server",data);
 
-        $.post("http://127.0.0.1:3000/admin/get-user",data,function (result) {
+        $.post(endurl + "/admin/get-user",data,function (result) {
             console.log("[AdminHomeHandler.JS] got the following result from server ", result);
             $("#search-result").empty();
             $("#main-container").append("<div class=\"container\" id=\"search-result\"></div>");
@@ -93,12 +98,8 @@ $(function () {
                 let data = $(this).serialize();
                 console.log("data sending to server for update", data);
 
-                // $.post("http://127.0.0.1:3000/admin/update-user", data, function (result) {
-                //     console.log(result);
-                // });
-
                 $.ajax({
-                    url:"http://127.0.0.1:3000/admin/update-user",
+                    url: endurl + "/admin/update-user",
                     type:"POST",
                     data:data,
                     contentType:"application/x-www-form-urlencoded"
@@ -122,7 +123,7 @@ function OnDeleteUser(elem) {
     var obj = {
         username : elem.id
     }
-    $.post( "http://127.0.0.1:3000/admin/delete-user", obj,function( data ) {
+    $.post( endurl + "/admin/delete-user", obj,function( data ) {
         elem.closest(".user-layout").remove();
     });
 

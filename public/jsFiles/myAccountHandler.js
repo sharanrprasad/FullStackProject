@@ -1,5 +1,9 @@
+var endurl = "https://safe-shore-55413.herokuapp.com";
+
+//var endurl = "http://127.0.0.1:3000";
+
 $(function () {
-    $.getJSON("http://127.0.0.1:3000/user-myaccount/user-widgets",function (data) {
+    $.getJSON(endurl + "/user-myaccount/user-widgets",function (data) {
         console.log(data);
 
         var num = data.num;
@@ -27,7 +31,7 @@ $(function () {
     });
 
     $("#back").click(function () {
-        $.get( "http://127.0.0.1:3000/user-home",function( data ) {
+        $.get( endurl + "/user-home",function( data ) {
             $("body").html(data);
         });
     })
