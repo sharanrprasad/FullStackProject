@@ -43,5 +43,6 @@ app.use((err, request, response, next) => {
     console.log("Error", err.stack);
     response.status(500).send('Something broke!');
 });
+console.log(process.env.HOME_URL);
 module.exports = app;
 //# sourceMappingURL=app.js.map

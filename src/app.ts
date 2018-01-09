@@ -52,6 +52,8 @@ app.use((err, request, response, next) => {
     response.status(500).send('Something broke!');
 });
 
+console.log(process.env.HOME_URL);
+
 module.exports = app;
 
 
