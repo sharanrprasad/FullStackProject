@@ -4,7 +4,7 @@ var UserWidgetDB;
     const errCodes = require('../ProjectConstants');
     exports = module.exports;
     function GetUserPurchasedWidgets(username, callback) {
-        let queryString = "select * from FullStackProject.WidgetData where id in ( select id from FullStackProject.UserWidgetData where username =? ) ";
+        let queryString = "select * from WidgetData where id in ( select id from UserWidgetData where username =? ) ";
         mysqlConn.query(queryString, username, (err, rows) => {
             if (err || rows.length == 0) {
                 callback(errCodes.NO_PURCHASED_WIDGETS, null);
@@ -14,7 +14,7 @@ var UserWidgetDB;
         });
     }
     function BuyWidget(username, id, callback) {
-        let queryString = "insert into FullStackProject.UserWidgetData set ? ";
+        let queryString = "insert into UserWidgetData set ? ";
         let obj = {
             username: username,
             id: id

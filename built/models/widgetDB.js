@@ -4,7 +4,7 @@ var WidgetDB;
     const errCodes = require('../ProjectConstants');
     exports = module.exports;
     function GetAllWidgetsData(callback) {
-        let queryString = "select * from FullStackProject.WidgetData";
+        let queryString = "select * from WidgetData";
         mysqlConn.query(queryString, (err, rows) => {
             if (err)
                 callback(errCodes.GENERIC_ERROR, null);

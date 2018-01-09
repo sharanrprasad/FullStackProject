@@ -15,8 +15,11 @@ var con = mysql.createConnection(process.env.JAWSDB_URL);
 
 
 con.connect(function(err) {
-    if (err) throw err;
-    console.log("Connection To Mysql DB Successfull!");
+    if (err) {
+        throw err;
+    }else {
+        console.log("Connection To Mysql DB Successfull!");
+    }
 });
 
 var userCreationQuery = "create table if not exists UserData(" +
@@ -31,7 +34,9 @@ var userCreationQuery = "create table if not exists UserData(" +
 
 
 con.query(userCreationQuery,err => {
-    if(err) throw  err;
+    if(err) {
+        throw  err;
+    }
     console.log("User table successfully created and running");
 });
 
@@ -45,7 +50,9 @@ var widgetCreationQuery = "create table if not exists WidgetData("+
     ")";
 
 con.query(widgetCreationQuery,err => {
-    if(err) throw  err;
+    if(err) {
+        throw  err;
+    }
     console.log("Widget table successfully created and running");
 });
 
@@ -60,7 +67,9 @@ var userWidgetCreationQuery = "create table if not exists UserWidgetData(" +
     ")";
 
 con.query(userWidgetCreationQuery,err => {
-    if(err) throw  err;
+    if(err) {
+        throw  err;
+    }
     console.log("UserWidget table successfully created and running");
 });
 
