@@ -11,6 +11,7 @@ const bodyParser = require('body-parser');
 const weather = require('weather-js');
 let jsonParser = bodyParser.json();
 router.get("/", function (request, response) {
+    console.log("[HomePageController]User Home request recieved");
     var userData = response.locals.userData; //TODO: Watch out herre for errors
     if (userData == null && request.session.username == null) {
         response.redirect("/"); //TODO test case this

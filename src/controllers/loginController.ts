@@ -11,9 +11,27 @@ router.use(function (request:express.Request,response:express.Response,next:expr
 });
 
 router.get("/",function (request:express.Request,response:express.Response) {
-    response.render("signupLogin" ,{
-        login : true
-    })
+    if(request.session.username){
+        userDB.GetUserDetails(request.session.username,(err,data) => {
+            if(err == null){
+                console.log("[loginController.ts] user session found redirecting to user-home");
+                response.locals.userData = data;
+                response.redirect('/user-home');
+                return;
+            }
+            response.render("signupLogin" ,{
+                login : true
+            })
+
+        })
+    }else {
+        response.render("signupLogin" ,{
+            login : true
+        })
+    }
+
+
+
 });
 
 router.post("/validate",function (request:express.Request,response:express.Response){

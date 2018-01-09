@@ -25,7 +25,11 @@ app.engine('.hbs', exphbs({
         },
         AdminLoginError : function () {
             return "";
+        },
+        Url : function () {
+            return process.env.HOME_URL || "http://127.0.0.1:3000";
         }
+
     }
 }));
 

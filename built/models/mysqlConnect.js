@@ -1,14 +1,8 @@
 const mysql = require('mysql');
-//localOnly
-//  var con = mysql.createConnection({
-//     host: "localhost",
-//     user: "root",
-//     password: "sharan123",
-//      database : "FullStackProject"
-// });
-console.log(process.env.JAWSDB_URL);
+var sqlurl = process.env.JAWSDB_URL || "mysql://root:sharan123@localhost/FullStackProject";
+console.log(sqlurl);
 //production
-var con = mysql.createConnection(process.env.JAWSDB_URL);
+var con = mysql.createConnection(sqlurl);
 con.connect(function (err) {
     if (err) {
         throw err;
