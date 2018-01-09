@@ -9,7 +9,7 @@ namespace  UserDB {
     exports = module.exports;
 
     function GetUserDetails(username: string, callback: (err: string, userData: UserDataModel) => void): void {
-        let queryString = "select * from FullStackProject.UserData where username =" + mysqlConn.escape(username) + "limit 1";
+        let queryString = "select * from UserData where username =" + mysqlConn.escape(username) + "limit 1";
         mysqlConn.query(queryString, (err, rows) => {
             if (err || rows.length == 0)
                 callback(errCodes.USER_NOT_PRESENT, null);
@@ -33,7 +33,7 @@ namespace  UserDB {
                 callabck(errCodes.USER_ALREADY_PRESENT, null);
                 return;
             }
-            let queryString = "insert into FullStackProject.UserData set ?";
+            let queryString = "insert into UserData set ?";
             mysqlConn.query(queryString, userData, function (err: Error, result: any): void {
                 if (err == null)
                     callabck(null, result);
@@ -50,7 +50,7 @@ namespace  UserDB {
 
     function MatchAndGetAllUserData(matchUsername:string,callback:(err:string,data:any) => void) : void {
             matchUsername = "%" + matchUsername + "%";
-            let queryString = "select * from FullStackProject.UserData where username like  ?  or name like  ?  ";
+            let queryString = "select * from UserData where username like  ?  or name like  ?  ";
             mysqlConn.query(queryString,[matchUsername,matchUsername],function (err: Error, rows: any[]): void {
                 if (err == null)
                     callback(null, rows);
@@ -64,7 +64,7 @@ namespace  UserDB {
 
     function  DeleteUser(username:string,callback:(errStr:string,result:any[]) => void) :void {
 
-        let queryString = " delete from FullStackProject.UserData where username = ?";
+        let queryString = " delete from UserData where username = ?";
         mysqlConn.query(queryString,username,function (err: Error, rows: any[]): void {
                 console.log(rows,err);
                 if(err == null){
@@ -79,7 +79,7 @@ namespace  UserDB {
 
 
     function  UpdateUserDetails(userData:UserDataModel,callback:(errStr:string,result:any[]) => void) :void {
-        let  queryString = "update FullStackProject.UserData set ? where username = ? ";
+        let  queryString = "update UserData set ? where username = ? ";
         mysqlConn.query(queryString,[{name : userData.name,city : userData.city,password:userData.password },userData.username] ,function (err: Error, rows: any[]): void {
             console.log(rows);
             if(err == null){

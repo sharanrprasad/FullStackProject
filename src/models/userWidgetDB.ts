@@ -8,7 +8,7 @@ namespace UserWidgetDB {
     function GetUserPurchasedWidgets (username:string,callback:(err:string,data:any[]) => void){
 
 
-        let queryString = "select * from FullStackProject.WidgetData where id in ( select id from FullStackProject.UserWidgetData where username =? ) ";
+        let queryString = "select * from WidgetData where id in ( select id from UserWidgetData where username =? ) ";
 
         mysqlConn.query(queryString,username,(err,rows) => {
                 if(err || rows.length == 0) {
@@ -24,7 +24,7 @@ namespace UserWidgetDB {
 
     function  BuyWidget(username:string,id:string,callback:(err:string,data:any[]) => void){
 
-        let queryString =  "insert into FullStackProject.UserWidgetData set ? ";
+        let queryString =  "insert into UserWidgetData set ? ";
         let obj = {
             username:username,
             id : id

@@ -1,18 +1,25 @@
 const mysql = require('mysql');
 
- var con = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "sharan123",
-     database : "FullStackProject"
-});
+
+//localOnly
+//  var con = mysql.createConnection({
+//     host: "localhost",
+//     user: "root",
+//     password: "sharan123",
+//      database : "FullStackProject"
+// });
+
+ //production
+var con = mysql.createConnection(process.env.JAWSDB_URL);
+
+
 
 con.connect(function(err) {
     if (err) throw err;
     console.log("Connection To Mysql DB Successfull!");
 });
 
-var userCreationQuery = "create table if not exists FullStackProject.UserData(" +
+var userCreationQuery = "create table if not exists UserData(" +
     "username varchar(30) not null," +
     "password varchar(30)," +
     "name varchar(20)," +
@@ -29,7 +36,7 @@ con.query(userCreationQuery,err => {
 });
 
 
-var widgetCreationQuery = "create table if not exists FullStackProject.WidgetData("+
+var widgetCreationQuery = "create table if not exists WidgetData("+
     "id varchar(10) not null," +
     "name varchar(15),"+
     "description varchar(50)," +
@@ -44,7 +51,7 @@ con.query(widgetCreationQuery,err => {
 
 
 
-var userWidgetCreationQuery = "create table if not exists FullStackProject.UserWidgetData(" +
+var userWidgetCreationQuery = "create table if not exists UserWidgetData(" +
     "id varchar(10) not null,"+
     "username varchar(30),"+
     "primary key(id,username),"+
