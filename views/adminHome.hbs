@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+    <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/custom-search.css" rel="stylesheet">
+    <link href="/css/search-result.css" rel="stylesheet">
+    <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="/jsFiles/adminHomeHandler.js"></script>
+    <link href="/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+</head>
+<body>
+
+<header class="jumbotron my-4">
+    <h1 class="mb-0 section-heading">Welcome Admin !!</h1>
+    <p class="text-primary">Search the User by Email or Name to Update or Delete Data!</p>
+</header>
+
+
+<div class="container">
+    <div class="row">
+        <div class="span12">
+            <form id="search-user" class="form-search form-horizontal pull-right" method="post" action="">
+                <div class="input-append span12">
+                    <input type="text" class="search-query" name="searchname" placeholder="Search">
+                    <button type="submit" class="btn"><i class="fa fa-search" style="font-size: small"></i></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="container" id="main-container">
+
+<div class="container" id="search-result">
+
+</div>
+</div>
+
+
+
+
+</body>
+</html>

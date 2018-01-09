@@ -1,12 +1,57 @@
-import {Express, Response} from "express";
+import * as express from "express";
 
-var express = require('express');
-var router = express.Router();
+const exphbs = require('express-handlebars');
+const path = require('path');
+const bodyParser = require("body-parser");
+const app = express();
+const cookieParser = require('cookie-parser');
+const session = require('express-session');
 
-/* GET home page. */
-router.get('/', function(req:Request, res:Response, next:Function) {
-    res.render('index', { title: 'Express' });
+
+//hbs engine
+app.engine('.hbs', exphbs({
+    defaultLayout: 'main',
+    extname: '.hbs',
+    helpers: {
+        LoginError : function () { return ''; },
+        SignUpError : function () {
+            return "";
+        },
+        MyAccountError : function () {
+            return "";
+        },
+        UserName : function () {
+            return "";
+        },
+        AdminLoginError : function () {
+            return "";
+        }
+    }
+}));
+
+app.set('view engine', '.hbs');
+
+app.use(express.static(path.join(__dirname, '../public')));
+
+//bodyparser
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+//cookie and sessions
+app.use(cookieParser());
+app.use(session({secret: "Shh, its a secret!"}));
+
+
+app.use((err, request, response, next) => {
+    // log the error, for now just console.log
+    console.log("Error" ,err.stack);
+    response.status(500).send('Something broke!');
 });
 
-module.exports = router;
+module.exports = app;
+
+
+
+
+
 

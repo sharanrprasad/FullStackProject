@@ -1,89 +1,45 @@
+import * as express from "express";
+import * as session from "express-session";
+
+const app = require('./app');
+const loginController = require("./controllers/loginController");
+const signupController = require("./controllers/signupController");
+const port:string = process.env.PORT ||  "3000";
+const mysqlConnection = require("./models/mysqlConnect");
+const userDB = require('./models/userDB');
+const homePageController = require("./controllers/homePageController");
+const myAccountController = require("./controllers/myAccountController");
+const adminController = require("./controllers/adminController");
 
 
-var appserver = require('../src/appserver');
-var debug = require('debug')('Project1BackEnd:server');
-var http = require('http');
+app.get("/",function (request:express.Request,response:express.Response) {
 
-
-/**
- * Get port from environment and store in Express.
- */
-
-debug("Starting index.ts")
-
-var port = normalizePort(process.env.PORT || '3000');
-appserver.set('port', port);
-
-/**
- * Create HTTP server.
- */
-
-var server = http.createServer(appserver);
-
-/**
- * Listen on provided port, on all network interfaces.
- */
-
-server.listen(port);
-server.on('error', onError);
-server.on('listening', onListening);
-
-/**
- * Normalize a port into a number, string, or false.
- */
-
-function normalizePort(val:string) {
-    var port = parseInt(val, 10);
-
-    if (isNaN(port)) {
-        // named pipe
-        return val;
+    if(request.session.username){
+        userDB.GetUserDetails(request.session.username,(err,data) => {
+            if(err == null){
+                console.log("[index.ts] user session found redirecting to user-home");
+                response.locals.userData = data;
+                response.redirect('/user-home');
+                return;
+            }
+            response.render('landingPage');
+        })
+    }else {
+        console.log("[index.ts] user session not found launching landing page");
+        response.render("landingPage");
     }
+});
 
-    if (port >= 0) {
-        // port number
-        return port;
-    }
+app.use('/sign-in',loginController);
 
-    return false;
-}
+app.use('/sign-up',signupController);
 
-/**
- * Event listener for HTTP server "error" event.
- */
+app.use('/user-home',homePageController);
 
-function onError(error:NodeJS.ErrnoException) {
-    if (error.syscall !== 'listen') {
-        throw error;
-    }
+app.use('/user-myaccount',myAccountController);
 
-    var bind = typeof port === 'string'
-        ? 'Pipe ' + port
-        : 'Port ' + port;
+app.use('/admin',adminController);
 
-    // handle specific listen errors with friendly messages
-    switch (error.code) {
-        case 'EACCES':
-            console.error(bind + ' requires elevated privileges');
-            process.exit(1);
-            break;
-        case 'EADDRINUSE':
-            console.error(bind + ' is already in use');
-            process.exit(1);
-            break;
-        default:
-            throw error;
-    }
-}
+app.listen(port);
 
-/**
- * Event listener for HTTP server "listening" event.
- */
 
-function onListening() {
-    var addr = server.address();
-    var bind = typeof addr === 'string'
-        ? 'pipe ' + addr
-        : 'port ' + addr.port;
-    debug('Listening on ' + bind);
-}

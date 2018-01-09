@@ -1,0 +1,1 @@
+{"version":3,"file":"ProjectConstants.js","sourceRoot":"","sources":["../src/ProjectConstants.ts"],"names":[],"mappings":"AAAA;IAAA;QACW,kBAAa,GAAW,IAAI,CAAC;QAC7B,qBAAgB,GAAW,IAAI,CAAC;QAChC,uBAAkB,GAAW,IAAI,CAAC;QAClC,yBAAoB,GAAW,IAAI,CAAC;QACpC,yBAAoB,GAAY,IAAI,CAAC;IAIhD,CAAC;CAAA;AAED,IAAI,gBAAgB,GAAG,IAAI,gBAAgB,EAAE,CAAC;AAE9C,MAAM,CAAC,OAAO,GAAG,gBAAgB,CAAC"}
