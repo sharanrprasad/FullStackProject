@@ -52,6 +52,7 @@ $(function () {
         })
 
     $("#myaccount").click(function () {
+        console.log("myaccount clicked in home page");
         $.get( endurl +"/user-myaccount",function( data ) {
             $("body").html(data);
         });

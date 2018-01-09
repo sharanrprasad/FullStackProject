@@ -31,6 +31,7 @@ $(function () {
     });
 
     $("#back").click(function () {
+        console.log("back button clicked in myaccount");
         $.get( endurl + "/user-home",function( data ) {
             $("body").html(data);
         });
