@@ -6,6 +6,7 @@ const mysql = require('mysql');
 //     password: "sharan123",
 //      database : "FullStackProject"
 // });
+console.log(process.env.JAWSDB_URL);
 //production
 var con = mysql.createConnection(process.env.JAWSDB_URL);
 con.connect(function (err) {

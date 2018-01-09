@@ -9,6 +9,8 @@ const mysql = require('mysql');
 //      database : "FullStackProject"
 // });
 
+console.log(process.env.JAWSDB_URL);
+
  //production
 var con = mysql.createConnection(process.env.JAWSDB_URL);
 
