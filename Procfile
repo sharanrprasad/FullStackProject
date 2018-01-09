@@ -1,1 +1,1 @@
-web: node built/index.js
+web: node ./built/index.js
