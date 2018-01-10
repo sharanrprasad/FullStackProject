@@ -11,7 +11,7 @@ router.get("/", function (request, response) {
     if (response.locals.errStr != null) {
         errAny = "SomeThing Broke Please try buying Again";
     }
-    response.render("userMyaccount", {
+    response.render("userAccount", {
         helpers: {
             MyAccountError: function () {
                 return errAny;

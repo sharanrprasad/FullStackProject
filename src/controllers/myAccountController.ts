@@ -12,7 +12,7 @@ router.get("/",function (request:express.Request,response:express.Response){
         errAny = "SomeThing Broke Please try buying Again";
     }
 
-    response.render("userMyaccount", {
+    response.render("userAccount", {
             helpers: {
                 MyAccountError: function () {
                     return errAny;
