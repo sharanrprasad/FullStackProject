@@ -8,7 +8,22 @@ let userDB = require('../models/userDB');
 const UserDataModel = require('../models/userDataModel');
 router.get("/", function (request, response) {
     console.log("[AdminController:] Home Page request recieved ");
-    response.render('adminLogin');
+    try {
+        if (request.session.adminname && request.session.adminname == "admin@admin.com") {
+            response.render("adminHomePage");
+        }
+        else {
+            response.render('adminLogin');
+        }
+    }
+    catch (err) {
+        response.render('adminLogin');
+    }
+});
+router.get("/logout", function (request, response) {
+    request.session.destroy((err) => {
+        response.redirect("/");
+    });
 });
 router.get("/validate", function (request, response) {
     console.log("[AdminController:] Home Page request recieved ");
@@ -38,7 +53,8 @@ router.post("/validate", function (request, response) {
             });
         }
         else {
-            response.render("adminHome");
+            request.session.adminname = username;
+            response.render("adminHomePage");
         }
     }
     catch (err) {

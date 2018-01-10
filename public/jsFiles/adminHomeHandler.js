@@ -43,11 +43,14 @@ $(function () {
                     let htmlString = "<div class=\"container  user-layout\" name=\"search-result\">\n <div class=\"row\">\n <div class=\"col-md-4\">\n" +
                         "            <div class=\"form_main\">\n <h4 class=\"heading\"> " +
                         row.username+ "<span></span></h4>\n <div class=\"form\">\n <form action=\"#\" method=\"post\" name=\"userformy\">\n" +
+                        "<label for=\"name\" class=\"col-md-3 control-label\">Name</label>"+
                         "<input type=\"text\" required=\"\"  value=\""+ row.name + " \"name=\"name\" class=\"txt\">\n" +
+                        "<label for=\"password\" class=\"col-md-3 control-label\">Password</label>"+
                         " <input type=\"text\" required=\"\"  value=\""+ row.password + " \"name=\"password\" class=\"txt\">\n" +
+                        "<label for=\"city\" class=\"col-md-3 control-label\">City</label>"+
                         " <input type=\"text\" required=\"\"  value=\""+ row.city + " \"name=\"city\" class=\"txt\">\n" +
                         "<input type=\"text\"  value=\""+ row.username + " \"name=\"username\" class=\"txt\" hidden>\n" +
-                        " <button type=\"submit\" class=\"btn\"><i class=\"fa fa-search\" style=\"font-size: small\"></i></button>\n" +
+                        " <button type=\"submit\" class=\"btn\"><i class=\"fa fa-pencil-square-o\" style=\"font-size: small\"></i>Edit</button>\n" +
                         " </form>\n </div>\n <div class=\"container \">\n" +
                         " <a class=\"btn btn-primary\" style=\"color:firebrick\" onclick = \"OnDeleteUser(this)\" id=\"" + row.username + "\">Delete User\n" +
                         "                        <i class = \"fa fa-user\" style=\"font-size: medium\"></i></a>\n" +

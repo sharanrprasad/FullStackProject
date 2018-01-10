@@ -5,15 +5,27 @@ let jsonParser = bodyParser.json();
 let userDB = require('../models/userDB');
 const UserDataModel = require('../models/userDataModel')
 
-
-
-
-
 router.get("/",function (request:express.Request,response:express.Response){
          console.log("[AdminController:] Home Page request recieved ");
-        response.render('adminLogin');
+         try{
+             if(request.session.adminname && request.session.adminname == "admin@admin.com"){
 
+                 response.render("adminHomePage");
+
+             }else{
+                 response.render('adminLogin');
+             }
+         }catch (err){
+             response.render('adminLogin');
+         }
 });
+
+router.get("/logout",function (request:express.Request,response:express.Response){
+    request.session.destroy((err) =>{
+        response.redirect("/");
+    });
+})
+
 
 
 router.get("/validate",function (request:express.Request,response:express.Response){
@@ -46,7 +58,8 @@ router.post("/validate",function (request:express.Request,response:express.Respo
                     }
                 })
             }else{
-                response.render("adminHome");
+                request.session.adminname = username;
+                response.render("adminHomePage");
 
             }
 
