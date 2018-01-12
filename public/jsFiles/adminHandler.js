@@ -28,6 +28,7 @@ $(function () {
 
     $("#search-user").submit(function (event) {
         event.preventDefault();
+        event.stopImmediatePropagation();
         let data = $('#search-user').serialize();
         console.log("data sending to server",data);
 
