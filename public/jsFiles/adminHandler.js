@@ -7,7 +7,7 @@ $(function () {
 
     console.log("Inside Admin Home Handler JS");
 
-    $("#search-user").validate({
+    $("#searchuser").validate({
         rules: {
             searchname: {
                 required: true,
@@ -26,24 +26,24 @@ $(function () {
     });
 
 
-    $("#search-user").submit(function (event) {
+    $("#searchuser").submit(function (event) {
         event.preventDefault();
         event.stopImmediatePropagation();
-        let data = $('#search-user').serialize();
+        let data = $('#searchuser').serialize();
         console.log("data sending to server",data);
 
         $.post(endurl + "/admin/get-user",data,function (result) {
             console.log("[AdminHomeHandler.JS] got the following result from server ", result);
-            $("#search-result").empty();
-            $("#main-container").append("<div class=\"container\" id=\"search-result\"></div>");
+            $("#searchresult").empty();
+            $("#main-container").append("<div class=\"container\" id=\"searchresult\"></div>");
             if(result == null || result.length == 0){
-                $("#search-result").append("<p> No User Found <i class=\"fa fa-thumbs-down\" aria-hidden=\"true\"></i></p>");
+                $("#searchresult").append("<p> No User Found <i class=\"fa fa-thumbs-down\" aria-hidden=\"true\"></i></p>");
 
             }else{
 
                 result.forEach((row,i) => {
 
-                    let htmlString = "<div class=\"container  user-layout\" name=\"search-result\">\n <div class=\"row\">\n <div class=\"col-md-4\">\n" +
+                    let htmlString = "<div class=\"container  user-layout\" name=\"searchresult\">\n <div class=\"row\">\n <div class=\"col-md-4\">\n" +
                         "            <div class=\"form_main\">\n <h4 class=\"heading\"> " +
                         row.username+ "<span></span></h4>\n <div class=\"form\">\n <form action=\"#\" method=\"post\" name=\"userformy\">\n" +
                         "<label for=\"name\" class=\"col-md-3 control-label\">Name</label>"+
@@ -64,7 +64,7 @@ $(function () {
                         "</div>"
 
 
-                    $("#search-result").append(htmlString);
+                    $("#searchresult").append(htmlString);
 
 
                 })
