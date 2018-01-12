@@ -7,29 +7,33 @@ $(function () {
 
     console.log("Inside Admin Home Handler JS");
 
-    $("#searchuser").validate({
-        rules: {
-            searchname: {
-                required: true,
+    // $("#searchuser").validate({
+    //     rules: {
+    //         searchname: {
+    //             required: true,
+    //
+    //         }
+    //     },
+    //         messages: {
+    //             searchname:"All Users Data will be displayed"
+    //         },
+    //
+    //     submitHandler: function (form) {
+    //         console.log("Success in validating form submit");
+    //         return false;
+    //
+    //     }
+    // });
 
-            }
-        },
-            messages: {
-                searchname:"All Users Data will be displayed"
-            },
 
-        submitHandler: function (form) {
-            console.log("Success in validating form submit");
-            return false;
-
+    $("#searchuser").click(function () {
+        console.log("on search click called");
+       // event.preventDefault();
+       // event.stopImmediatePropagation();
+        let nameval = $('#searchuserinput').val();
+        let data = {
+            searchname : nameval
         }
-    });
-
-
-    $("#searchuser").submit(function (event) {
-        event.preventDefault();
-        event.stopImmediatePropagation();
-        let data = $('#searchuser').serialize();
         console.log("data sending to server",data);
 
         $.post(endurl + "/admin/get-user",data,function (result) {

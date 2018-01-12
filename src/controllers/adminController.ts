@@ -77,7 +77,7 @@ router.post("/get-user",jsonParser,function (request:express.Request,response:ex
     try {
         console.log("[AdminController: Get - Users] request recieved",request.body.searchname);
 
-        let searchUsername = request.body.searchname;
+        let searchUsername = request.body.searchname || "";
         userDB.MatchAndGetAllUserData(searchUsername, (err, result) => {
             console.log(result);
             response.setHeader('Content-Type', 'application/json');
