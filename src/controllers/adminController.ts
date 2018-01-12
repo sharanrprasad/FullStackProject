@@ -10,7 +10,7 @@ router.get("/",function (request:express.Request,response:express.Response){
          try{
              if(request.session.adminname && request.session.adminname == "admin@admin.com"){
 
-                 response.render("adminHomePage");
+                 response.render("adminHome");
 
              }else{
                  response.render('adminLogin');
@@ -59,7 +59,7 @@ router.post("/validate",function (request:express.Request,response:express.Respo
                 })
             }else{
                 request.session.adminname = username;
-                response.render("adminHomePage");
+                response.render("adminHome");
 
             }
 

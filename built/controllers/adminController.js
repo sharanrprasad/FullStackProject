@@ -10,7 +10,7 @@ router.get("/", function (request, response) {
     console.log("[AdminController:] Home Page request recieved ");
     try {
         if (request.session.adminname && request.session.adminname == "admin@admin.com") {
-            response.render("adminHomePage");
+            response.render("adminHome");
         }
         else {
             response.render('adminLogin');
@@ -54,7 +54,7 @@ router.post("/validate", function (request, response) {
         }
         else {
             request.session.adminname = username;
-            response.render("adminHomePage");
+            response.render("adminHome");
         }
     }
     catch (err) {
