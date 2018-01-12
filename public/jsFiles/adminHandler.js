@@ -5,6 +5,8 @@ var endurl = "https://safe-shore-55413.herokuapp.com";
 
 $(function () {
 
+    console.log("Inside Admin Home Handler JS");
+
     $("#search-user").validate({
         rules: {
             searchname: {
