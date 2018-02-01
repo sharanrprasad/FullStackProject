@@ -1,7 +1,7 @@
 import * as express from "express";
 const router = express.Router();
-const LoginDataModel = require('../models/loginDataModel');
-const userDB = require('../models/userDB');
+import LoginData = require('../models/loginData');
+import * as userDB from '../models/userDB';;
 const errCodes = require('../ProjectConstants');
 
 
@@ -36,7 +36,7 @@ router.get("/",function (request:express.Request,response:express.Response) {
 
 router.post("/validate",function (request:express.Request,response:express.Response){
      try {
-          var loginData = new LoginDataModel(request.body.username, request.body.password);
+          var loginData = new LoginData(request.body.username, request.body.password);
          console.log("[LoginController]: validate request recieved for username and password ", loginData.username,loginData.password);
          userDB.GetUserDetails(loginData.username, (err,userDataModel) => {
                        if(err == errCodes.USER_NOT_PRESENT  ){
@@ -69,5 +69,6 @@ router.post("/validate",function (request:express.Request,response:express.Respo
      }
 });
 
-module.exports = router;
+//module.exports = router;
+export = router;
 

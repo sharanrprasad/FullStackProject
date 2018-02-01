@@ -1,7 +1,7 @@
 import * as express from "express";
 const router = express.Router();
-const errCodes = require('../ProjectConstants');
-const userWidgetDB = require('../models/userWidgetDB');
+import errCodes = require('../ProjectConstants');
+import * as  userWidgetDB from '../models/userWidgetDB';
 
 router.get("/",function (request:express.Request,response:express.Response){
 
@@ -56,7 +56,7 @@ router.get("/user-widgets",function (request:express.Request,response:express.Re
 });
 
 
-module.exports = router;
+export = router;
 
 
 

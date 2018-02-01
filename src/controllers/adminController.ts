@@ -1,9 +1,11 @@
 import * as express from "express";
-const router = express.Router();
 const bodyParser = require('body-parser');
 let jsonParser = bodyParser.json();
-let userDB = require('../models/userDB');
-const UserDataModel = require('../models/userDataModel')
+import * as userDB from '../models/userDB';
+import UserData = require('../models/userData')
+
+
+const router = express.Router();
 
 router.get("/",function (request:express.Request,response:express.Response){
          console.log("[AdminController:] Home Page request recieved ");
@@ -98,7 +100,7 @@ router.post("/get-user",jsonParser,function (request:express.Request,response:ex
 router.post("/update-user",jsonParser,function (request:express.Request,response:express.Response) {
     try{
         console.log("[AdminController: Update - Users] request recieved",request.body.name);
-        var userDataModel = new UserDataModel(request.body.username, request.body.password, request.body.name, request.body.city);
+        var userDataModel = new UserData(request.body.username, request.body.password, request.body.name, request.body.city);
         userDB.UpdateUserDetails(userDataModel, (errStr: string, data: any) => {
             console.log(data);
             response.setHeader('Content-Type', 'application/json');
@@ -130,4 +132,5 @@ router.post("/delete-user",function (request:express.Request,response:express.Re
 })
 
 
-module .exports = router;
+//module.exports = router;
+export = router;

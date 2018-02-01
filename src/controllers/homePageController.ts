@@ -1,10 +1,10 @@
 import * as express from "express";
 const router = express.Router();
-const errCodes = require('../ProjectConstants');
-let UserDataModel = require("../models/userDataModel");
-const widgetDB = require('../models/widgetDB');
-const userWidgetDB = require('../models/userWidgetDB');
-const userDB = require('../models/userDB');
+import errCodes = require('../ProjectConstants');
+import UserData = require("../models/userData");
+import * as widgetDB from '../models/widgetDB';
+import * as  userWidgetDB from '../models/userWidgetDB';
+import * as userDB from '../models/userDB';
 const bodyParser = require('body-parser');
 const weather = require('weather-js');
 
@@ -107,4 +107,5 @@ router.get("/logout",function (request:express.Request,response:express.Response
                 })
 });
 
-module.exports = router;
+//module.exports = router;
+export = router;

@@ -1,15 +1,18 @@
-import * as express from "express";
-import * as session from "express-session";
+'use strict';
 
+import * as express from "express";
 const app = require('./app');
-const loginController = require("./controllers/loginController");
-const signupController = require("./controllers/signupController");
+import loginController = require("./controllers/loginController");
+import signupController = require("./controllers/signupController");
 const port:string = process.env.PORT ||  "3000";
-const mysqlConnection = require("./models/mysqlConnect");
-const userDB = require('./models/userDB');
-const homePageController = require("./controllers/homePageController");
-const myAccountController = require("./controllers/myAccountController");
-const adminController = require("./controllers/adminController");
+import mysqlConnection = require("./models/mysqlConnect");
+import * as userDB from './models/userDB';
+import homePageController = require("./controllers/homePageController");
+import myAccountController = require("./controllers/myAccountController");
+import adminController = require("./controllers/adminController");
+import  restApiIndex = require('./controllers/restAPI/restAPIIndex');
+import * as utils from  "./utils";
+
 
 
 app.get("/",function (request:express.Request,response:express.Response) {
@@ -40,6 +43,11 @@ app.use('/user-myaccount',myAccountController);
 
 app.use('/admin',adminController);
 
+app.use('/api',restApiIndex);
+
 app.listen(port);
+
+
+
 
 

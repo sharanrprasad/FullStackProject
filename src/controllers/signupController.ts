@@ -2,9 +2,9 @@
 
 import * as express from "express";
 const router = express.Router();
-const userDB = require('../models/userDB');
-const errCodes = require('../ProjectConstants');
-let UserDataModel = require("../models/userDataModel");
+import * as userDB from '../models/userDB';
+import errCodes = require('../ProjectConstants');
+import UserData = require("../models/userData");
 
 router.use(function (request:express.Request,response:express.Response,next:express.NextFunction) {
     console.log("signup Request Recieved Time");
@@ -36,7 +36,7 @@ router.get("/",function (request:express.Request,response:express.Response) {
 router.post("/validate",function (request:express.Request,response:express.Response,next:express.NextFunction) {
     try
     {
-        var userDataModel = new UserDataModel(request.body.username, request.body.password, request.body.name, request.body.city);
+        var userDataModel = new UserData(request.body.username, request.body.password, request.body.name, request.body.city);
         userDB.UserSignUp(userDataModel, (errStr: string, data: any) => {
             console.log("callback from sign up db got ", errStr);
             if (errStr == null)
@@ -69,5 +69,6 @@ router.post("/validate",function (request:express.Request,response:express.Respo
 
 });
 
-module.exports = router;
+//module.exports = router;
+export = router;
 
