@@ -8,21 +8,25 @@ function CheckTokenAuth(request:express.Request,response:express.Response,next:e
     try{
 
         let token:any = request.headers['x-access-token'];
-        if (Array.isArray(token))
-        {
-            token = token[0];
-        }
+        try {
         jwt.verify(token,projectConstants.JWT_SECRET_KEY,(err, decoded) =>{
             if(err){
                 console.log("[CheckAuthToken]:token verification failed ",err.stack);
-                ConstructMessage(projectConstants.SESSION_EXPIRED,{});
+                let reply= ConstructMessage(projectConstants.SESSION_EXPIRED,{});
+                response.json(reply);
 
             }else{
                 console.log("[CheckAuthToken]:token verified successfully",decoded);
                 next();
             }
+        });
 
-        } );
+        }
+        catch (e) {
+            let reply= ConstructMessage(projectConstants.SESSION_EXPIRED,{});
+            response.json(reply);
+        }
+
 
 
     }

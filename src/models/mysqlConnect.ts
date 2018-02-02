@@ -66,6 +66,22 @@ con.query(userWidgetCreationQuery, err => {
 });
 
 
+let cartCreationQuery = "create table if not exists UserCartData ("+
+    "id varchar(10) not null," +
+    "username varchar(30)," +
+    "primary key(id,username)," +
+    "foreign key(id) references WidgetData(id) on delete cascade on update cascade," +
+    "foreign key(username) references UserData(username) on delete cascade on update cascade" +
+    ")";
+
+con.query(cartCreationQuery, err => {
+    if (err) {
+        throw  err;
+    }
+    console.log("Cart table successfully created and running");
+});
+
+
 //module.exports = con;
 export = con;
 

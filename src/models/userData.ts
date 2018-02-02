@@ -1,5 +1,5 @@
 class UserData {
-   public username :string
+    public username :string
     public password : string
     public name : string
     public city :string

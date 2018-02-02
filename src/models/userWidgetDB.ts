@@ -1,8 +1,6 @@
 import mysqlConn = require('./mysqlConnect');
 import errCodes = require('../ProjectConstants');
 
-//exports = module.exports;
-
 function GetUserPurchasedWidgets(username: string, callback: (err: string, data: any[]) => void) {
 
 
@@ -20,14 +18,14 @@ function GetUserPurchasedWidgets(username: string, callback: (err: string, data:
 }
 
 
-function BuyWidget(username: string, id: string, callback: (err: string, data: any) => void) {
+function BuyWidget(username: string, ids: string[], callback: (err: string, data: any) => void) {
 
-    let queryString = "insert into UserWidgetData set ? ";
-    let obj = {
-        username: username,
-        id: id
+    let queryString = "insert into UserWidgetData values ? ";
+    let values:string[][];
+    for(let i =0; i<ids.length; i++){
+        values[i] = [username,ids[i]];
     }
-    mysqlConn.query(queryString, obj, function (err: Error, result: any,) {
+    mysqlConn.query(queryString, values, function (err: Error, result: any,) {
         if (err)
             callback(errCodes.GENERIC_ERROR, null);
         else
@@ -39,7 +37,35 @@ function BuyWidget(username: string, id: string, callback: (err: string, data: a
 }
 
 
-// exports.GetUserPurchasedWidgets = GetUserPurchasedWidgets;
-// exports.BuyWidget = BuyWidget;
-export {GetUserPurchasedWidgets,BuyWidget};
+function  AddToCart(username:string,id: string, callback: (err: string, data: any) => void) {
+
+    let queryString = "insert into UserCartData set ? ";
+    let obj = {
+        username:username,
+        id:id
+    }
+
+    mysqlConn.query(queryString,obj, function (err: Error, result: any) {
+        if (err)
+            callback(errCodes.GENERIC_ERROR, null);
+        else
+            callback(null, result);
+
+    })
+}
+
+function  GetUserCartItems(username:string,callback:(err: string, data: any) => void){
+
+    let queryString = "Select * from WidgetData,UserCartData where WidgetData.id = UserCartData.id and UserCartData.username = ? ";
+    mysqlConn.query(queryString,username,function (err: Error, result: any) {
+        if (err)
+            callback(errCodes.GENERIC_ERROR, null);
+        else
+            callback(null, result);
+
+    })
+}
+
+
+export {GetUserPurchasedWidgets,BuyWidget,AddToCart,GetUserCartItems};
 

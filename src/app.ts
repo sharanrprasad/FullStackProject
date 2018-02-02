@@ -55,7 +55,7 @@ app.use((err, request, response, next) => {
 
 console.log(process.env.HOME_URL);
 
-module.exports = app;
+export = app;
 
 
 

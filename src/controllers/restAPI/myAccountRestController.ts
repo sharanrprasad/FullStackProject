@@ -3,12 +3,14 @@ const router = express.Router();
 import errCodes = require('../../ProjectConstants');
 import * as  userWidgetDB from '../../models/userWidgetDB';
 import * as utils from  '../../utils'
+import  * as userDB from '../../models/userDB'
+import UserData = require('../../models/userData');
 
 
 
 router.post("/user-widgets",function (request:express.Request,response:express.Response){
     let username = request.body.username;
-    console.log("[My AccountController : user-widgets] username requesting service is  " , username);
+    console.log("[My AccountControllerRest  : user-widgets] username requesting service is  " , username);
     userWidgetDB.GetUserPurchasedWidgets(username,(errStr:string,widgets:any[] ) => {
         console.log(widgets)
         if(errStr == null){
@@ -27,6 +29,29 @@ router.post("/user-widgets",function (request:express.Request,response:express.R
         }
 
     });
+
+
+});
+
+
+router.get("/user-data",function (request:express.Request,response:express.Response){
+
+    try {
+        let username: any = request.headers['x-user-name'];
+        if (username == null) {
+            response.json(utils.ConstructMessage(errCodes.GENERIC_ERROR, {}));
+            return;
+        }
+        userDB.GetUserDetails(username, (errStr: string, userData: UserData) => {
+            if (errStr = null) {
+                errStr = errCodes.SUCCESS;
+            }
+            response.json(utils.ConstructMessage(errStr, userData));
+
+        });
+    }catch (err){
+        response.json(utils.ConstructMessage(errCodes.GENERIC_ERROR, {}));
+    }
 
 
 });

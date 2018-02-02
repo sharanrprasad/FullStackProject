@@ -6,7 +6,8 @@ class  ProjectConstants{
     public INCORRECT_PASSWORD :string = "52";
     public USER_ALREADY_PRESENT :string = "53";
     public NO_PURCHASED_WIDGETS : string = "54";
-    public SESSION_EXPIRED :string = "55";
+    public CART_EMPTY = "55";
+    public SESSION_EXPIRED :string = "56";
 
 
 

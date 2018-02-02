@@ -28,21 +28,22 @@ router.get("/get-widgets", function (request:express.Request,response:express.Re
 
 router.post("/buy-widget",function (request:express.Request,response:express.Response,next:express.NextFunction) {
     let username = request.body.username;
-    let widgetID = request.body.id;
-    if(username == null || widgetID == null){
-        console.log("[HomePageController: username or widget id is null]",username,widgetID);
+    let widgetIDs:string[]= request.body.ids;
+    if(username == null || widgetIDs == null){
+        console.log("[HomePageController: username or widget id is null]",username,widgetIDs);
         response.json(utils.ConstructMessage(errCodes.GENERIC_ERROR,{}));
-
-
-    }else{
-        console.log("[HomePageController:/Buy Widget username and id is",username,widgetID);
+    }else if(widgetIDs.length == 0){
+        response.json(utils.ConstructMessage(errCodes.CART_EMPTY,{}));
+    }
+    else{
+        console.log("[HomePageController:/Buy Widget username and ids is",username,widgetIDs);
         next();
     }
 
 },function (request:express.Request,response:express.Response) {
     let username = request.body.username;
-    let widgetID = request.body.id;
-    userWidgetDB.BuyWidget(username,widgetID,(errStr:string,result:any) :void =>{
+    let widgetIDs :string []= request.body.ids;
+    userWidgetDB.BuyWidget(username,widgetIDs,(errStr:string,result:any) :void =>{
         if(errStr == null){
             errStr = errCodes.SUCCESS;
         } //TODO;Insert if not present only
@@ -50,6 +51,45 @@ router.post("/buy-widget",function (request:express.Request,response:express.Res
 
     });
 });
+
+
+router.post("/add-to-cart",function (request:express.Request,response:express.Response,next){
+    let widgetID = request.body.widgetID;
+    let username = request.body.username;
+    if(username == null || widgetID == null){
+        console.log("[HomePageController Add to cart : username or widget id is null]",username,widgetID);
+        response.json(utils.ConstructMessage(errCodes.GENERIC_ERROR,{}));
+        return;
+    }
+    userWidgetDB.AddToCart(username,widgetID,(errStr:string,result:any):void =>{
+        if(errStr == null)
+            errStr = errCodes.SUCCESS;
+
+        response.json(ConstructMessage(errStr,{result:result}));
+    });
+
+});
+
+router.get("/get-cart",function(request:express.Request,response:express.Response,next) {
+    let username = request.headers['user-name'];
+    if(Array.isArray(username)){
+        username = username[0];
+    }
+    if(username == null){
+        console.log("[HomePageController GetCart : username  is null]");
+        response.json(utils.ConstructMessage(errCodes.GENERIC_ERROR,{}));
+        return;
+    }
+    userWidgetDB.GetUserCartItems(username,(errStr:string,result:any):void =>{
+        if(errStr == null)
+            errStr = errCodes.SUCCESS;
+
+        response.json(ConstructMessage(errStr,{widgets:result}));
+    });
+})
+
+
+
 
 router.get("/get-weather", function (request:express.Request,response:express.Response){
     console.log("[HomePageController] Get Waether called");

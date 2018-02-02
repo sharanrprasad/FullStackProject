@@ -1,10 +1,10 @@
 import * as express from "express";
 const router = express.Router();
-import errCodes = require('../ProjectConstants');
-import UserData = require("../models/userData");
-import * as widgetDB from '../models/widgetDB';
-import * as  userWidgetDB from '../models/userWidgetDB';
-import * as userDB from '../models/userDB';
+import errCodes = require('../../ProjectConstants');
+import UserData = require("../../models/userData");
+import * as widgetDB from '../../models/widgetDB';
+import * as  userWidgetDB from '../../models/userWidgetDB';
+import * as userDB from '../../models/userDB';
 const bodyParser = require('body-parser');
 const weather = require('weather-js');
 

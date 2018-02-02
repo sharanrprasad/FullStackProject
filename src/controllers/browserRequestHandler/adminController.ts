@@ -1,8 +1,8 @@
 import * as express from "express";
 const bodyParser = require('body-parser');
 let jsonParser = bodyParser.json();
-import * as userDB from '../models/userDB';
-import UserData = require('../models/userData')
+import * as userDB from '../../models/userDB';
+import UserData = require('../../models/userData')
 
 
 const router = express.Router();
@@ -132,5 +132,4 @@ router.post("/delete-user",function (request:express.Request,response:express.Re
 })
 
 
-//module.exports = router;
 export = router;

@@ -2,16 +2,13 @@
 
 import * as express from "express";
 const app = require('./app');
-import loginController = require("./controllers/loginController");
-import signupController = require("./controllers/signupController");
 const port:string = process.env.PORT ||  "3000";
 import mysqlConnection = require("./models/mysqlConnect");
 import * as userDB from './models/userDB';
-import homePageController = require("./controllers/homePageController");
-import myAccountController = require("./controllers/myAccountController");
-import adminController = require("./controllers/adminController");
 import  restApiIndex = require('./controllers/restAPI/restAPIIndex');
 import * as utils from  "./utils";
+import apiIndex = require('./controllers/api/apiIndex');
+import browserRequestIndex = require('./controllers/browserRequestHandler/browserRequestIndex')
 
 
 
@@ -33,17 +30,12 @@ app.get("/",function (request:express.Request,response:express.Response) {
     }
 });
 
-app.use('/sign-in',loginController);
 
-app.use('/sign-up',signupController);
+app.use('/rest-api',restApiIndex);
 
-app.use('/user-home',homePageController);
+app.use('/api',apiIndex);
 
-app.use('/user-myaccount',myAccountController);
-
-app.use('/admin',adminController);
-
-app.use('/api',restApiIndex);
+app.use('/br',browserRequestIndex);
 
 app.listen(port);
 

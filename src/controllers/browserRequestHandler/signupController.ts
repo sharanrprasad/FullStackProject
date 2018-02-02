@@ -2,9 +2,9 @@
 
 import * as express from "express";
 const router = express.Router();
-import * as userDB from '../models/userDB';
-import errCodes = require('../ProjectConstants');
-import UserData = require("../models/userData");
+import * as userDB from '../../models/userDB';
+import errCodes = require('../../ProjectConstants');
+import UserData = require("../../models/userData");
 
 router.use(function (request:express.Request,response:express.Response,next:express.NextFunction) {
     console.log("signup Request Recieved Time");

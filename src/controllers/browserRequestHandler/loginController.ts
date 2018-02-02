@@ -1,8 +1,8 @@
 import * as express from "express";
 const router = express.Router();
-import LoginData = require('../models/loginData');
-import * as userDB from '../models/userDB';;
-const errCodes = require('../ProjectConstants');
+import LoginData = require('../../models/loginData');
+import * as userDB from '../../models/userDB';;
+const errCodes = require('../../ProjectConstants');
 
 
 router.use(function (request:express.Request,response:express.Response,next:express.NextFunction) {

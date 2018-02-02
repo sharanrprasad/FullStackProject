@@ -1,7 +1,7 @@
 import * as express from "express";
 const router = express.Router();
-import errCodes = require('../ProjectConstants');
-import * as  userWidgetDB from '../models/userWidgetDB';
+import errCodes = require('../../ProjectConstants');
+import * as  userWidgetDB from '../../models/userWidgetDB';
 
 router.get("/",function (request:express.Request,response:express.Response){
 
