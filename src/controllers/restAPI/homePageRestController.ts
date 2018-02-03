@@ -25,6 +25,34 @@ router.get("/get-widgets", function (request:express.Request,response:express.Re
     });
 });
 
+router.get("/get-widgets-user", function (request:express.Request,response:express.Response) {
+
+     let username:any = request.headers["x-user-name"];
+        if(username == null){
+            response.json(utils.ConstructMessage(errCodes.GENERIC_ERROR,{}));
+            return;
+        }
+        try {
+
+            widgetDB.GetAllWidgetsWithBrought(username, (errStr: string, data: any[]) => {
+                if (errStr == null) {
+                    errStr = errCodes.SUCCESS;
+                }
+                response.json(utils.ConstructMessage(errStr, {widgets: data}));
+            });
+        }
+        catch(err)
+        {
+            response.json(utils.ConstructMessage(errCodes.GENERIC_ERROR,{}));
+
+        }
+
+
+});
+
+
+
+
 
 router.post("/buy-widget",function (request:express.Request,response:express.Response,next:express.NextFunction) {
     let username = request.body.username;
