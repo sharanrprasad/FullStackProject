@@ -3,7 +3,7 @@ import errCodes = require('../ProjectConstants');
 
 
 
-function GetAllWidgetsData(callback: (err: string, data: any[]) => void): void {
+export function GetAllWidgetsData(callback: (err: string, data: any[]) => void): void {
     let queryString = "select * from WidgetData";
     mysqlConn.query(queryString, (err, rows) => {
         if (err)
@@ -14,7 +14,7 @@ function GetAllWidgetsData(callback: (err: string, data: any[]) => void): void {
     });
 }
 
-function  GetAllWidgetsWithBrought (username:string, callback:(err: string, data: any[]) => void): void {
+export function  GetAllWidgetsWithBrought (username:string, callback:(err: string, data: any[]) => void): void {
 
     let querystring = " select WidgetData.id,name,description,className,username from WidgetData  left   join (select id,username from UserWidgetData  where " +
         "UserWidgetData.username = ? ) as userbroughtWidgets  on " +
@@ -32,6 +32,5 @@ function  GetAllWidgetsWithBrought (username:string, callback:(err: string, data
 }
 
 
-export = {GetAllWidgetsData,GetAllWidgetsWithBrought}
 
 

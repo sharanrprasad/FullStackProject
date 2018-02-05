@@ -66,6 +66,17 @@ function  GetUserCartItems(username:string,callback:(err: string, data: any) => 
     })
 }
 
+function  RemoveFromCart(username:string,id:string,callback:(err: string, data: any) => void){
+    let queryString = "Delete from UserCartData where id = ? and username = ? ";
+    mysqlConn.query(queryString,[id,username],function (err: Error, result: any) {
+        if (err)
+            callback(errCodes.GENERIC_ERROR, null);
+        else
+            callback(null, result);
 
-export {GetUserPurchasedWidgets,BuyWidget,AddToCart,GetUserCartItems};
+    })
+}
+
+
+export {GetUserPurchasedWidgets,BuyWidget,AddToCart,GetUserCartItems,RemoveFromCart};
 

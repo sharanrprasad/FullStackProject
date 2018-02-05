@@ -55,7 +55,7 @@ router.get("/get-widgets-user", function (request:express.Request,response:expre
 
 
 router.post("/buy-widget",function (request:express.Request,response:express.Response,next:express.NextFunction) {
-    let username = request.body.username;
+    let username:any = request.headers["x-user-name"];
     let widgetIDs:string[]= request.body.ids;
     if(username == null || widgetIDs == null){
         console.log("[HomePageController: username or widget id is null]",username,widgetIDs);
@@ -82,8 +82,8 @@ router.post("/buy-widget",function (request:express.Request,response:express.Res
 
 
 router.post("/add-to-cart",function (request:express.Request,response:express.Response,next){
-    let widgetID = request.body.widgetID;
-    let username = request.body.username;
+    let widgetID = request.body.widgetId;
+    let username:any = request.headers["x-user-name"];
     if(username == null || widgetID == null){
         console.log("[HomePageController Add to cart : username or widget id is null]",username,widgetID);
         response.json(utils.ConstructMessage(errCodes.GENERIC_ERROR,{}));
@@ -99,7 +99,7 @@ router.post("/add-to-cart",function (request:express.Request,response:express.Re
 });
 
 router.get("/get-cart",function(request:express.Request,response:express.Response,next) {
-    let username = request.headers['user-name'];
+    let username = request.headers['x-user-name'];
     if(Array.isArray(username)){
         username = username[0];
     }
@@ -114,28 +114,56 @@ router.get("/get-cart",function(request:express.Request,response:express.Respons
 
         response.json(ConstructMessage(errStr,{widgets:result}));
     });
-})
+});
+
+
+router.post("/remove-from-cart",function(request:express.Request,response:express.Response,next) {
+
+    try {
+        let username: any = request.headers["x-user-name"];
+        if (Array.isArray(username)) {
+            username = username[0];
+        }
+        let id: string = request.body.widgetId;
+        userWidgetDB.RemoveFromCart(username,id,(errStr, data) => {
+            if(errStr == null)
+                errStr = errCodes.SUCCESS;
+
+            response.json(ConstructMessage(errStr,data));
+        });
+
+    }
+
+    catch (err) {
+
+        response.json(utils.ConstructMessage(errCodes.GENERIC_ERROR,{}));
+    }
+
+
+
+
+});
 
 
 
 
 router.get("/get-weather", function (request:express.Request,response:express.Response){
-    console.log("[HomePageController] Get Waether called");
-    if(request.session.username) {
-        userDB.GetUserDetails(request.session.username, (err, data) => {
+    console.log("[HomePageControllerRest API] Get Waether called");
+    try {
+        let username : any = request.headers["x-user-name"];
+        userDB.GetUserDetails(username, (err, data) => {
             weather.find({search: data.city, degreeType: 'C'}, function (err, result) {
-                let jsonData = " ";
                 if (err) {
                     console.log("[Error in getting weather]",err);
+                    response.json(utils.ConstructMessage(errCodes.GENERIC_ERROR,{}));
                 } else {
-                    jsonData = JSON.stringify(result, null, 2)
+                    response.json(utils.ConstructMessage(errCodes.SUCCESS,data));
                 }
-                response.setHeader('Content-Type', 'application/json');
-                response.send(jsonData);
             });
         });
-    }else{
-        response.status(500).send("Weather Cannot be displayed");
+    }catch (e){
+
+        response.json(utils.ConstructMessage(errCodes.GENERIC_ERROR,{}));
     }
 });
 

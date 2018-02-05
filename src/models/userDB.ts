@@ -95,11 +95,6 @@ function UpdateUserDetails(userData: UserData, callback: (errStr: string, result
 
 export {GetUserDetails,UserSignUp,MatchAndGetAllUserData,DeleteUser,UpdateUserDetails}
 
-// exports.GetUserDetails = GetUserDetails;
-// exports.UserSignUp = UserSignUp;
-// exports.MatchAndGetAllUserData = MatchAndGetAllUserData;
-// exports.DeleteUser = DeleteUser;
-// exports.UpdateUserDetails = UpdateUserDetails;
 
 
 
