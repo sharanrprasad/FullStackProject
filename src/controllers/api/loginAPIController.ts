@@ -3,6 +3,7 @@ import LoginData = require('../../models/loginData');
 import * as userDB from '../../models/userDB';;
 const errCodes = require('../../ProjectConstants');
 import * as utils from  '../../utils'
+import * as commonTypes from "../../commonTypes";
 
 const router = express.Router();
 export  = router;

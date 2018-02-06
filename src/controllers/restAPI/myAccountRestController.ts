@@ -8,8 +8,8 @@ import UserData = require('../../models/userData');
 
 
 
-router.post("/user-widgets",function (request:express.Request,response:express.Response){
-    let username = request.body.username;
+router.get("/user-widgets",function (request:express.Request,response:express.Response){
+    let username:any = request.headers["x-user-name"];
     console.log("[My AccountControllerRest  : user-widgets] username requesting service is  " , username);
     userWidgetDB.GetUserPurchasedWidgets(username,(errStr:string,widgets:any[] ) => {
         console.log(widgets)
@@ -43,7 +43,7 @@ router.get("/user-data",function (request:express.Request,response:express.Respo
             return;
         }
         userDB.GetUserDetails(username, (errStr: string, userData: UserData) => {
-            if (errStr = null) {
+            if (errStr == null) {
                 errStr = errCodes.SUCCESS;
             }
             response.json(utils.ConstructMessage(errStr, userData));

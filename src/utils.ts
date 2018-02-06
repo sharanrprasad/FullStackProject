@@ -39,10 +39,10 @@ function CheckTokenAuth(request:express.Request,response:express.Response,next:e
 }
 
 
-function ConstructMessage(msgType:string,data:any):string{
+function ConstructMessage(msgType:string,data:any):commonTypes.ResponseMessage{
 
    let message :commonTypes.ResponseMessage = new commonTypes.ResponseMessage(msgType,data);
-   return message.ToJson();
+   return message;
 
 }
 

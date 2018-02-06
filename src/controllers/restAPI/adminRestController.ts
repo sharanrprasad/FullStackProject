@@ -14,29 +14,24 @@ router.post("/validate",function (request:express.Request, response:express.Resp
     try{
         let username = request.body.username;
         let password = request.body.password;
-        let replyMessage:string = '';
         if(username != "admin@admin.com"){
-
-            replyMessage = utils.ConstructMessage(errorCodes.USER_NOT_PRESENT,{});
-            response.json(replyMessage);
+            response.json( utils.ConstructMessage(errorCodes.USER_NOT_PRESENT,{}));
         }
         else if(password != "admin@123") {
 
-            replyMessage= utils.ConstructMessage(errorCodes.INCORRECT_PASSWORD,{});
-            response.json(replyMessage);
+
+            response.json( utils.ConstructMessage(errorCodes.INCORRECT_PASSWORD,{}));
 
         }
         else {
            let token = utils.GetNewUserToken(username);
-            replyMessage= utils.ConstructMessage(errorCodes.SUCCESS,{token:token});
-            response.json(replyMessage);
+
+            response.json( utils.ConstructMessage(errorCodes.SUCCESS,{token:token}));
         }
 
 
     }catch(err){
-
-        let replyMessage:string = utils.ConstructMessage(errorCodes.USER_NOT_PRESENT,{});
-        response.json(replyMessage);
+        response.json( utils.ConstructMessage(errorCodes.USER_NOT_PRESENT,{}));
     }
 
 
@@ -49,8 +44,7 @@ router.post("/get-user",function (request:express.Request,response:express.Respo
         userDB.MatchAndGetAllUserData(searchUsername, (err, result) => {
             if(err == null)
                 err = errorCodes.SUCCESS;
-            let reply:string = utils.ConstructMessage(err,{users:result});
-           response.json(reply);
+           response.json( utils.ConstructMessage(err,{users:result}));
         });
     }catch (err){
         console.log(err.stack);
@@ -70,8 +64,8 @@ router.post("/update-user",function (request:express.Request,response:express.Re
             if(errStr == null) {
                 errStr = errorCodes.SUCCESS;
             }
-                let reply:string = utils.ConstructMessage(errStr,data);
-                response.json(reply);
+
+                response.json( utils.ConstructMessage(errStr,data));
 
         });
 
@@ -93,8 +87,8 @@ router.post("/delete-user",function (request:express.Request,response:express.Re
             if(err == null) {
                 err = errorCodes.SUCCESS;
             }
-            let reply:string = utils.ConstructMessage(err,result);
-            response.json(reply);
+
+            response.json(utils.ConstructMessage(err,result));
 
         });
     }
