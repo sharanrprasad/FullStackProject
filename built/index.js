@@ -1,14 +1,11 @@
-"use strict";
+'use strict';
 Object.defineProperty(exports, "__esModule", { value: true });
 const app = require('./app');
-const loginController = require("./controllers/loginController");
-const signupController = require("./controllers/signupController");
 const port = process.env.PORT || "3000";
-const mysqlConnection = require("./models/mysqlConnect");
-const userDB = require('./models/userDB');
-const homePageController = require("./controllers/homePageController");
-const myAccountController = require("./controllers/myAccountController");
-const adminController = require("./controllers/adminController");
+const userDB = require("./models/userDB");
+const restApiIndex = require("./controllers/restAPI/restAPIIndex");
+const apiIndex = require("./controllers/api/apiIndex");
+const browserRequestIndex = require("./controllers/browserRequestHandler/browserRequestIndex");
 app.get("/", function (request, response) {
     if (request.session.username) {
         userDB.GetUserDetails(request.session.username, (err, data) => {
@@ -26,10 +23,8 @@ app.get("/", function (request, response) {
         response.render("landingPage");
     }
 });
-app.use('/sign-in', loginController);
-app.use('/sign-up', signupController);
-app.use('/user-home', homePageController);
-app.use('/user-myaccount', myAccountController);
-app.use('/admin', adminController);
+app.use('/rest-api', restApiIndex);
+app.use('/api', apiIndex);
+app.use('/br', browserRequestIndex);
 app.listen(port);
 //# sourceMappingURL=index.js.map
