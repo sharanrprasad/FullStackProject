@@ -4,7 +4,7 @@ var endurl = "https://safe-shore-55413.herokuapp.com";
 
 
 $(function () {
-        $.getJSON( endurl+"/user-home//get-widgets",function (widgetsData) {
+        $.getJSON( endurl+"/br/user-home//get-widgets",function (widgetsData) {
            widgetsData.forEach( (widget,i) => {
                console.log("class name is" ,widget.className);
                 var htmlString = "<div class=\"col-lg-3 col-md-6 mb-4\"> "+
@@ -25,7 +25,7 @@ $(function () {
 
         });
 
-        $.getJSON(endurl + "/user-home/get-weather",function (data) {
+        $.getJSON(endurl + "/br/user-home/get-weather",function (data) {
                 console.log("weather");
                 try{
                     let currentWeather = "<div class= \"col-md-4 mb-4\"> <div class=\"card h-100\"> <div class=\"card-body\">  <h2 class=\"card-title\">Current</h2> " +
@@ -53,7 +53,7 @@ $(function () {
 
     $("#myaccount").click(function () {
         console.log("myaccount clicked in home page");
-        $.get( endurl +"/user-myaccount",function( data ) {
+        $.get( endurl +"/br/user-myaccount",function( data ) {
             $("body").html(data);
         });
     })
@@ -69,7 +69,7 @@ function OnBuy(elem) {
     var obj = {
         id : elem.id
     }
-    $.post( endurl + "/user-home/buy-widget", obj,function( data ) {
+    $.post( endurl + "/br/user-home/buy-widget", obj,function( data ) {
         $("body").html(data);
     });
 }

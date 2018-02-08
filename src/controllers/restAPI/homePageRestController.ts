@@ -6,6 +6,7 @@ import * as  userWidgetDB from '../../models/userWidgetDB';
 import * as userDB from '../../models/userDB';
 import * as utils from '../../utils';
 import {ConstructMessage} from "../../utils";
+import {any} from "../../../../../Library/Preferences/IntelliJIdea2017.3/javascript/extLibs/global-types/node_modules/@types/async";
 const weather = require('weather-js');
 
 
@@ -51,9 +52,6 @@ router.get("/get-widgets-user", function (request:express.Request,response:expre
 });
 
 
-
-
-
 router.post("/buy-widget",function (request:express.Request,response:express.Response,next:express.NextFunction) {
     let username:any = request.headers["x-user-name"];
     let widgetIDs:string[]= request.body.ids;
@@ -69,13 +67,21 @@ router.post("/buy-widget",function (request:express.Request,response:express.Res
     }
 
 },function (request:express.Request,response:express.Response) {
-    let username = request.body.username;
+    let username:any = request.headers["x-user-name"];
     let widgetIDs :string []= request.body.ids;
     userWidgetDB.BuyWidget(username,widgetIDs,(errStr:string,result:any) :void =>{
         if(errStr == null){
-            errStr = errCodes.SUCCESS;
-        } //TODO;Insert if not present only
-        response.json(ConstructMessage(errStr,{result:result}));
+            userWidgetDB.RemoveFromCartMutiple(username,widgetIDs,(err : string ,data:any) : void => {
+                    if(err == null){
+                        err = errCodes.SUCCESS;
+                    }
+                response.json(ConstructMessage(err, {result: data}));
+
+            } );
+
+        }else {
+            response.json(ConstructMessage(errStr, {result: result}));
+        }
 
     });
 });
@@ -148,7 +154,7 @@ router.post("/remove-from-cart",function(request:express.Request,response:expres
 
 
 router.get("/get-weather", function (request:express.Request,response:express.Response){
-    console.log("[HomePageControllerRest API] Get Waether called");
+    console.log("[HomePageControllerRest API] Get Weather called");
     try {
         let username : any = request.headers["x-user-name"];
         userDB.GetUserDetails(username, (err, data) => {
@@ -157,7 +163,8 @@ router.get("/get-weather", function (request:express.Request,response:express.Re
                     console.log("[Error in getting weather]",err);
                     response.json(utils.ConstructMessage(errCodes.GENERIC_ERROR,{}));
                 } else {
-                    response.json(utils.ConstructMessage(errCodes.SUCCESS,data));
+                    console.log("Weather data is ",result)
+                    response.json(utils.ConstructMessage(errCodes.SUCCESS,result));
                 }
             });
         });

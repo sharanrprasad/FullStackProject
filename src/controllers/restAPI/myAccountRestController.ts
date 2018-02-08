@@ -23,7 +23,7 @@ router.get("/user-widgets",function (request:express.Request,response:express.Re
         }else{
             let obj = {
                 num : 0,
-                data : null
+                data : []
             }
             response.json(utils.ConstructMessage(errStr,obj));
         }

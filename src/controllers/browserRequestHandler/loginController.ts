@@ -47,8 +47,8 @@ router.post("/validate",function (request:express.Request,response:express.Respo
                                }
                            })
                            return;
-                       }else if(loginData.password != userDataModel.password){
-
+                       }else if(loginData.password !== userDataModel.password){
+                            console.log("[Password Incorrect ] ",loginData.password, userDataModel.password  );
                            response.render("signupLogin" ,{
                                login : true,
                                helpers : {
