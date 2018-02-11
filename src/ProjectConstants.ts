@@ -8,6 +8,7 @@ class  ProjectConstants{
     public NO_PURCHASED_WIDGETS : string = "54";
     public CART_EMPTY = "55";
     public SESSION_EXPIRED :string = "56";
+    public SEARCH_NOT_FOUND :string = "57";
 
 
 

@@ -31,6 +31,25 @@ export function  GetAllWidgetsWithBrought (username:string, callback:(err: strin
 
 }
 
+export function  SearchWidgetByName (searchname:string,username:string, callback:(err: string, data: any[]) => void): void {
+
+    searchname = "%" + searchname + "%";
+
+    let queryString = " select WidgetData.id,name,description,className,username from WidgetData  left   join (select id,username from UserWidgetData  where " +
+    "UserWidgetData.username = ? ) as userbroughtWidgets  on " +
+    "WidgetData.id = userbroughtWidgets.id where name like  ? ";
+    mysqlConn.query(queryString, [username, searchname], function (err: Error, rows: any[]): void {
+        if (err == null)
+            callback(null, rows);
+        else {
+            console.log(err.stack);
+            callback(errCodes.GENERIC_ERROR, rows);
+        }
+
+    });
+
+}
+
 
 
 

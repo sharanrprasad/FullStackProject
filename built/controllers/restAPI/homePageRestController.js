@@ -34,6 +34,29 @@ router.get("/get-widgets-user", function (request, response) {
         response.json(utils.ConstructMessage(errCodes.GENERIC_ERROR, {}));
     }
 });
+router.get("/search-widgets", function (request, response) {
+    let searchname = request.headers['x-search-name'];
+    let username = request.headers["x-user-name"];
+    if (searchname == null) {
+        response.json(utils.ConstructMessage(errCodes.GENERIC_ERROR, {}));
+        return;
+    }
+    try {
+        widgetDB.SearchWidgetByName(searchname, username, (err, data) => {
+            if (err == null) {
+                if (data == null || data.length == 0)
+                    err = errCodes.SEARCH_NOT_FOUND;
+                else
+                    err = errCodes.SUCCESS;
+            }
+            response.json(utils.ConstructMessage(err, { widgets: data }));
+        });
+    }
+    catch (err) {
+        console.log("[Error in search] ", err.toString());
+        response.json(utils.ConstructMessage(errCodes.GENERIC_ERROR, {}));
+    }
+});
 router.post("/buy-widget", function (request, response, next) {
     let username = request.headers["x-user-name"];
     let widgetIDs = request.body.ids;

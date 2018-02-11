@@ -26,6 +26,7 @@ router.get("/get-widgets", function (request:express.Request,response:express.Re
     });
 });
 
+
 router.get("/get-widgets-user", function (request:express.Request,response:express.Response) {
 
      let username:any = request.headers["x-user-name"];
@@ -50,6 +51,34 @@ router.get("/get-widgets-user", function (request:express.Request,response:expre
 
 
 });
+
+
+router.get("/search-widgets", function (request:express.Request,response:express.Response){
+    let searchname:any = request.headers['x-search-name'];
+    let username:any = request.headers["x-user-name"];
+    if(searchname == null){
+        response.json(utils.ConstructMessage(errCodes.GENERIC_ERROR,{}));
+        return;
+    }
+    try{
+        widgetDB.SearchWidgetByName(searchname,username,(err:string,data:any[]) => {
+            if(err == null){
+                if(data == null || data.length == 0)
+                    err = errCodes.SEARCH_NOT_FOUND;
+                else
+                    err = errCodes.SUCCESS;
+
+            }
+            response.json(utils.ConstructMessage(err, {widgets: data}));
+        })
+
+    }catch (err){
+        console.log("[Error in search] ",err.toString());
+        response.json(utils.ConstructMessage(errCodes.GENERIC_ERROR,{}));
+    }
+
+
+})
 
 
 router.post("/buy-widget",function (request:express.Request,response:express.Response,next:express.NextFunction) {

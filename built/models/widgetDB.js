@@ -26,4 +26,19 @@ function GetAllWidgetsWithBrought(username, callback) {
     });
 }
 exports.GetAllWidgetsWithBrought = GetAllWidgetsWithBrought;
+function SearchWidgetByName(searchname, username, callback) {
+    searchname = "%" + searchname + "%";
+    let queryString = " select WidgetData.id,name,description,className,username from WidgetData  left   join (select id,username from UserWidgetData  where " +
+        "UserWidgetData.username = ? ) as userbroughtWidgets  on " +
+        "WidgetData.id = userbroughtWidgets.id where name like  ? ";
+    mysqlConn.query(queryString, [username, searchname], function (err, rows) {
+        if (err == null)
+            callback(null, rows);
+        else {
+            console.log(err.stack);
+            callback(errCodes.GENERIC_ERROR, rows);
+        }
+    });
+}
+exports.SearchWidgetByName = SearchWidgetByName;
 //# sourceMappingURL=widgetDB.js.map

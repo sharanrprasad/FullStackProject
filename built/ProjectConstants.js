@@ -9,6 +9,7 @@ class ProjectConstants {
         this.NO_PURCHASED_WIDGETS = "54";
         this.CART_EMPTY = "55";
         this.SESSION_EXPIRED = "56";
+        this.SEARCH_NOT_FOUND = "57";
         //response types
         this.SUCCESS = "111";
         //project constants
